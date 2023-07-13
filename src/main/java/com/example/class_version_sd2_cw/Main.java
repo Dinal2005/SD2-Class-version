@@ -6,9 +6,13 @@ import java.util.Scanner;
 public class Main {
     public static FoodQueue Cashier_01,Cashier_02,Cashier_03;
 
-    private static  final int max_burger_stock = 50;
+    private static  final int max_burger_stock = 5;
     private static final int low_stock_msg = 10;
     public static int stock_count = max_burger_stock;
+    private static final int price_per_burger = 650;
+    private static int Cashier_01_income = 0;
+    private static int Cashier_02_income = 0;
+    private static int Cashier_03_income = 0;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] ags) {
@@ -37,6 +41,7 @@ public class Main {
             System.out.println("107 or LPD: Load Program Data from file.");
             System.out.println("108 or STK: View Remaining burgers Stock.");
             System.out.println("109 or AFS: Add burgers to Stock.");
+            System.out.println("110 or IFQ: View income of the cashiers.");
             System.out.println("999 or EXT: Exit the Program.");
             System.out.print("Enter your choice: ");
             choice = scanner.next();
@@ -64,7 +69,6 @@ public class Main {
                     remove_served_customer();
                     break;
                 case "105", "VCS":
-                    //all_cashier_customer_names = new  String[10];
                     //view_sorted_customer();
                     break;
                 case "106", "SPD":
@@ -74,10 +78,13 @@ public class Main {
                     //load_program_data();
                     break;
                 case "108", "STK":
-                    //view_remaining_stock();
+                    view_remaining_stock();
                     break;
                 case "109", "AFS":
-                    //add_burgers_to_stock();
+                    add_burgers_to_stock();
+                    break;
+                case "110", "IFQ":
+                    view_income_of_each_queue();
                     break;
                 case "999", "EXT":
                     System.out.println("Exiting the program.....");
@@ -135,7 +142,7 @@ public class Main {
         if (Cashier_01.getQueue().size() < Cashier_01.getQueue_size()){
             queue_size_min = Cashier_01;
         }
-        if( Cashier_02.getQueue().size() < Cashier_02.getQueue_size() && Cashier_02.getQueue().size() < Cashier_03.getQueue().size() ){
+        if(Cashier_02.getQueue().size() < Cashier_02.getQueue_size() && Cashier_02.getQueue().size() < Cashier_03.getQueue().size() ){
             queue_size_min = Cashier_02;
         }else if(Cashier_03.getQueue().size() < Cashier_03.getQueue_size() && Cashier_03.getQueue().size() < Cashier_01.getQueue().size()){
             queue_size_min = Cashier_03;
@@ -202,39 +209,116 @@ public class Main {
                 break;
         }
     }
-    private static void remove_served_customer(){
-        System.out.print("Enter the Cashier (1-3): ");
-        int cashier = scanner.nextInt();
+    private static void remove_served_customer() {
+        if (stock_count > 0) {
+            System.out.print("Enter the Cashier (1-3): ");
+            int cashier = scanner.nextInt();
 
+            if (stock_count > 0) {
+                System.out.println();
+                if (cashier == 1) {
+                    if (!Cashier_01.getQueue().isEmpty()) {
+                        Customers customer_name = Cashier_01.get(0);
+                        int requestedBurgerCount = customer_name.getBurger_Count();
 
-        switch (cashier){
-            case 1:
-                if (!Cashier_01.getQueue().isEmpty()){
-                    Customers customer_name = Cashier_01.get(0);
-                    Cashier_01.remove(0);
-                    stock_count -= customer_name.getBurger_Count();
-                }else{
-                    System.out.println("Cashier 01 is Empty...");
+                        if (requestedBurgerCount <= stock_count) {
+                            Cashier_01.remove(0);
+                            stock_count -= requestedBurgerCount;
+                            Cashier_01_income = requestedBurgerCount * price_per_burger;
+                            System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
+                            System.out.println("Please Come Again!!!!");
+                        } else {
+                            System.out.println("Please add burgers, cannot serve " + requestedBurgerCount + " burgers.");
+                        }
+                    } else {
+                        System.out.println("Cashier 01 is Empty...");
+                    }
+                } else if (cashier == 2) {
+                    if (!Cashier_02.getQueue().isEmpty()) {
+                        Customers customer_name = Cashier_02.get(0);
+                        int requestedBurgerCount = customer_name.getBurger_Count();
+
+                        if (requestedBurgerCount <= stock_count) {
+                            Cashier_02.remove(0);
+                            stock_count -= requestedBurgerCount;
+                            Cashier_02_income = requestedBurgerCount * price_per_burger;
+                            System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
+                            System.out.println("Please Come Again!!!!");
+                        } else {
+                            System.out.println("Please add burgers, cannot serve " + requestedBurgerCount + " burgers.");
+                        }
+                    } else {
+                        System.out.println("Cashier 02 is Empty...");
+                    }
+                } else if (cashier == 3) {
+                    if (!Cashier_03.getQueue().isEmpty()) {
+                        Customers customer_name = Cashier_03.get(0);
+                        int requestedBurgerCount = customer_name.getBurger_Count();
+
+                        if (requestedBurgerCount <= stock_count) {
+                            Cashier_03.remove(0);
+                            stock_count -= requestedBurgerCount;
+                            Cashier_03_income = requestedBurgerCount * price_per_burger;
+                            System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
+                            System.out.println("Please Come Again!!!!");
+                        } else {
+                            System.out.println("Please add burgers, cannot serve " + requestedBurgerCount + " burgers.");
+                        }
+                    } else {
+                        System.out.println("Cashier 03 is Empty...");
+                    }
                 }
-                break;
-            case 2:
-                if (!Cashier_02.getQueue().isEmpty()){
-                    Customers customer_name = Cashier_02.get(0);
-                    Cashier_02.remove(0);
-                    stock_count -= customer_name.getBurger_Count();
-                }else{
-                    System.out.println("Cashier 02 is Empty...");
-                }
-                break;
-            case 3:
-                if (!Cashier_03.getQueue().isEmpty()){
-                    Customers customer_name = Cashier_03.get(0);
-                    Cashier_03.remove(0);
-                    stock_count -= customer_name.getBurger_Count();
-                }else{
-                    System.out.println("Cashier 03 is Empty...");
-                }
-                break;
+            }
+            if (stock_count < low_stock_msg) {
+                System.out.println();
+                System.out.println("Warning: Low stock! Remaining burger count is: " + stock_count);
+            }
+        } else {
+            System.out.println();
+            System.out.println("Stock is: " + stock_count + " Please add Burgers to the stock..");
+            System.out.println();
         }
+    }
+
+    //making the option to see the customers in the 3 queues in alphabetical order
+    private static void view_sorted_customer() {
+
+    }
+
+
+    //making the option to view the remaining burger stock
+    private static void view_remaining_stock(){
+        System.out.println();
+        System.out.println("Remaining burger stock balance is: " + stock_count);
+        System.out.println();
+    }
+
+    //making the option to add burgers to the current burger stock
+    private static void add_burgers_to_stock(){
+        System.out.println();
+        System.out.print("Enter the number of burgers to add : ");
+        int burger_add = scanner.nextInt();
+
+        if(burger_add < 0){
+            System.out.println("Invalid number of burgers... please try again...");
+            System.out.println();
+            return;
+        }
+        int new_stock_count = stock_count + burger_add;
+        if(new_stock_count >= 51){
+            System.out.println("Maximum stock count exceeded. Maximum stock is 50. Current stock count it: " +stock_count);
+            System.out.println();
+            return;
+        }
+        stock_count += burger_add;
+        System.out.println();
+        System.out.println(burger_add + " burgers added to the burger stock... Remaining burgers are: " + stock_count);
+        System.out.println();
+    }
+
+    private static void view_income_of_each_queue(){
+        System.out.println("Cashier 01 Income is: " +"Rs. " + Cashier_01_income);
+        System.out.println("Cashier 02 Income is: " +"Rs. " + Cashier_02_income);
+        System.out.println("Cashier 03 Income is: " +"Rs. " + Cashier_03_income);
     }
 }

@@ -27,8 +27,10 @@ public class FoodQueue {
     }
     public void remove(int remove_index){
         Queue.remove(remove_index);
-        System.out.println("Customer Removed Successfully..\n");
+        System.out.println("Customer Removed Successfully..");
+        System.out.println();
     }
+
 
     public Customers get(int index) {
         return Queue.get(index);
