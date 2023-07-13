@@ -1,6 +1,7 @@
 package com.example.class_version_sd2_cw;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -69,7 +70,7 @@ public class Main {
                     remove_served_customer();
                     break;
                 case "105", "VCS":
-                    //view_sorted_customer();
+                    view_sorted_customer();
                     break;
                 case "106", "SPD":
                     //store_program_data();
@@ -281,8 +282,35 @@ public class Main {
     }
 
     //making the option to see the customers in the 3 queues in alphabetical order
-    private static void view_sorted_customer() {
+    public static void view_sorted_customer(){
+        List<Customers> sort_customer = new ArrayList<>();
 
+        sort_customer.addAll(Cashier_01.bubblesort_customer());
+
+        sort_customer.addAll(Cashier_02. bubblesort_customer());
+
+        sort_customer. addAll (Cashier_03. bubblesort_customer());
+
+        sort_customer = new_bubble_sort(sort_customer);
+
+        System.out.println("Sorted list");
+        for (Customers customers: sort_customer){
+            System.out.println(customers.getFirst_Name() + " " + customers.getLast_Name() + " - " + customers.getBurger_Count() + " burgers");
+        }
+
+    }
+
+    public static List<Customers> new_bubble_sort(List<Customers> sort_customer){
+        for (int i = 0; i < sort_customer.size()-1; i++) {
+            for (int j = 0; j < sort_customer. size()-1; j++){
+                if(sort_customer.get (i). getFirst_Name().charAt(0)> sort_customer.get (i+1). getFirst_Name(). charAt (0)) {
+                    Customers temp = sort_customer. get(i);
+                    sort_customer. set(i, sort_customer. get(i + 1));
+                    sort_customer. set(i + 1, temp);
+                }
+            }
+        }
+        return sort_customer;
     }
 
 

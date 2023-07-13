@@ -31,6 +31,17 @@ public class FoodQueue {
         System.out.println();
     }
 
+    public List<Customers> bubblesort_customer(){
+        List<Customers> sort_customer = new ArrayList<>(Queue);
+        for (int i = 0; i < sort_customer.size()-1; i++){
+            if (sort_customer.get(i).getFirst_Name().charAt(0) > sort_customer.get(i+1).getFirst_Name().charAt(0)){
+                Customers temp = sort_customer.get(i);
+                sort_customer.set(i, sort_customer.get(i+1));
+                sort_customer.set(i+1,temp);
+            }
+        }
+        return sort_customer;
+    }
 
     public Customers get(int index) {
         return Queue.get(index);
