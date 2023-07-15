@@ -37,17 +37,17 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="284.0" layoutY="255.0" prefHeight="30.0" prefWidth="471.0" promptText="Enter the Customer Name">
+      <TextField fx:id="Search_box" layoutX="284.0" layoutY="255.0" prefHeight="30.0" prefWidth="471.0" promptText="Enter the Customer Name">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <Button layoutX="794.0" layoutY="255.0" mnemonicParsing="false" text="Search">
+      <Button defaultButton="true" layoutX="794.0" layoutY="255.0" mnemonicParsing="false" onAction="#Find" text="Search">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ListView layoutX="68.0" layoutY="325.0" prefHeight="410.0" prefWidth="812.0" />
-      <Button layoutX="699.0" layoutY="763.0" mnemonicParsing="false" onAction="#Back_page" text="Go back to the Main Page">
+      <ListView fx:id="list_output" layoutX="68.0" layoutY="325.0" prefHeight="410.0" prefWidth="812.0" />
+      <Button defaultButton="true" layoutX="699.0" layoutY="763.0" mnemonicParsing="false" onAction="#Back_page" text="Go back to the Main Page">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

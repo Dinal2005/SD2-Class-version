@@ -14,17 +14,17 @@
             <Image url="@bgimg.jpg" />
          </image>
       </ImageView>
-      <Text fontSmoothingType="LCD" layoutX="224.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foodies Fave Food Center" textAlignment="CENTER" underline="true" wrappingWidth="514.4000396728516">
+      <Text fontSmoothingType="LCD" layoutX="224.0" layoutY="658.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foodies Fave Food Center" textAlignment="CENTER" underline="true" wrappingWidth="514.4000396728516">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
       </Text>
-      <Text layoutX="411.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To">
+      <Text layoutX="409.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Text fontSmoothingType="LCD" layoutX="323.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foodies Fave Queue Management System" textAlignment="CENTER">
+      <Text fontSmoothingType="LCD" layoutX="306.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foodies Fave Queue Management System" textAlignment="CENTER">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -39,7 +39,7 @@
             <Image url="@burger_logo.png" />
          </image>
       </ImageView>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="405.0" layoutY="739.0" mnemonicParsing="false" onAction="#MainPage" text="Load the Main Page">
+      <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="405.0" layoutY="754.0" mnemonicParsing="false" onAction="#MainPage" text="Load the Main Page">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

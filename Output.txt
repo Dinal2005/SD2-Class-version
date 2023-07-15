@@ -1,0 +1,19 @@
+Current Burger Stock is:
+50
+
+Cashier 01 customer name:
+thanuga rodrigo 3
+Empty Slot
+
+Cashier 02 customer name:
+dinal fernando 5
+nigel jacob 2
+Empty Slot
+
+Cashier 03 customer name:
+dulanya perera 9
+Empty Slot
+Empty Slot
+Empty Slot
+Empty Slot
+

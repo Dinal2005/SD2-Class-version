@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,15 +18,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Homepage implements Initializable{
-    private Stage home;
-    private Scene scene;
-    private Parent startup;
-
+    @FXML
     public void MainPage(ActionEvent event) throws IOException {
-        startup = FXMLLoader.load(HelloApplication.class.getResource("hello-view.fxml"));
-        home = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(startup);
-        home.show();
+        System.out.println("Hello world");
+        Parent nextPage = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Scene currentScene = ((Button) event.getSource()).getScene();
+        currentScene.setRoot(nextPage);
     }
 
     @Override

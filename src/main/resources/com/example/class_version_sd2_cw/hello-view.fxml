@@ -183,12 +183,12 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Label fx:id="stock" alignment="CENTER" contentDisplay="CENTER" layoutX="737.0" layoutY="669.0" text="                         " underline="true">
+      <Label fx:id="stock" alignment="CENTER" contentDisplay="CENTER" layoutX="748.0" layoutY="657.0" text="                         " underline="true">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="728.0" layoutY="763.0" mnemonicParsing="false" onAction="#SearchPage" text="Click here to Search">
+      <Button defaultButton="true" layoutX="728.0" layoutY="763.0" mnemonicParsing="false" onAction="#SearchPage" text="Click here to Search">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

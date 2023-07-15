@@ -31,17 +31,34 @@ public class FoodQueue {
         System.out.println();
     }
 
-    public List<Customers> bubblesort_customer(){
-        List<Customers> sort_customer = new ArrayList<>(Queue);
-        for (int i = 0; i < sort_customer.size()-1; i++){
-            if (sort_customer.get(i).getFirst_Name().charAt(0) > sort_customer.get(i+1).getFirst_Name().charAt(0)){
-                Customers temp = sort_customer.get(i);
-                sort_customer.set(i, sort_customer.get(i+1));
-                sort_customer.set(i+1,temp);
+    public List<Customers> bubblesort_customer() {
+        List<Customers> sortedCustomers = new ArrayList<>(Queue);
+
+        int n = sortedCustomers.size();
+        boolean swapped;
+
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+
+            for (int j = 0; j < n - i - 1; j++) {
+                String currentFirstName = sortedCustomers.get(j).getFirst_Name();
+                String nextFirstName = sortedCustomers.get(j + 1).getFirst_Name();
+
+                if (currentFirstName.charAt(0) > nextFirstName.charAt(0)) {
+                    // Swap elements
+                    Customers temp = sortedCustomers.get(j);
+                    sortedCustomers.set(j, sortedCustomers.get(j + 1));
+                    sortedCustomers.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            if (!swapped) {
+                break;
             }
         }
-        return sort_customer;
+        return sortedCustomers;
     }
+
 
     public Customers get(int index) {
         return Queue.get(index);

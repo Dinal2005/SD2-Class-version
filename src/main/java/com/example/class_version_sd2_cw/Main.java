@@ -2,10 +2,15 @@ package com.example.class_version_sd2_cw;
 
 import javafx.application.Application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
     public static FoodQueue Cashier_01,Cashier_02,Cashier_03;
@@ -74,10 +79,10 @@ public class Main {
                     view_sorted_customer();
                     break;
                 case "106", "SPD":
-                    //store_program_data();
+                    store_program_data();
                     break;
                 case "107", "LPD":
-                    //load_program_data();
+                    load_program_data();
                     break;
                 case "108", "STK":
                     view_remaining_stock();
@@ -166,7 +171,7 @@ public class Main {
         System.out.print("Enter the Burger count: ");
         int burger_count = scanner.nextInt();
         try{
-            Customers newcustomer = new Customers(customer_first_name,customer_last_name,burger_count);
+            Customers newcustomer = new Customers(customer_first_name.substring(0,1).toLowerCase()+customer_first_name.substring(1),customer_last_name.substring(0,1).toLowerCase()+customer_last_name.substring(1),burger_count);
             queue_size_min.addcustomer(newcustomer);
         }catch (NullPointerException error){
             System.out.println("Cashiers are full");
@@ -298,7 +303,7 @@ public class Main {
 
         System.out.println("Sorted Customer List:");
         for (Customers customer : sort_customer) {
-            System.out.println(customer.getFirst_Name() + " " + customer.getLast_Name() + " - " + customer.getBurger_Count() + " burgers");
+            System.out.println(customer.getFirst_Name() + " " + customer.getLast_Name());
         }
     }
 
@@ -322,7 +327,179 @@ public class Main {
     }
 
     private static void store_program_data(){
+        try {
+            FileWriter output_file = new FileWriter("Output.txt");//textfile name and filewritter assigning
+            output_file.write("Current Burger Stock is:\n" +stock_count + "\n\n");//writing the burger stock
+            System.out.println();
+            output_file.write("Cashier 01 customer name:\n");
+            for (int i = 0; i < Cashier_01.getQueue_size();i++){
+                try {
+                    Customers customers = Cashier_01.get(i);
+                    output_file.write(customers.getFirst_Name()+" " +customers.getLast_Name()+ " "+ customers.getBurger_Count());
+                    output_file.write(System.lineSeparator());
+                }catch (Exception error){
+                    output_file.write("Empty Slot");
+                    output_file.write(System.lineSeparator());
+                }
+            }
+            output_file.write(System.lineSeparator());
+            output_file.write("Cashier 02 customer name:\n");
+            for (int i = 0; i < Cashier_02.getQueue_size();i++){
+                try {
+                    Customers customers = Cashier_02.get(i);
+                    output_file.write(customers.getFirst_Name()+" " +customers.getLast_Name()+ " "+ customers.getBurger_Count());
+                    output_file.write(System.lineSeparator());
+                }catch (Exception error){
+                    output_file.write("Empty Slot");
+                    output_file.write(System.lineSeparator());
+                }
+            }
+            output_file.write(System.lineSeparator());
+            output_file.write("Cashier 03 customer name:\n");
+            for (int i = 0; i < Cashier_03.getQueue_size();i++){
+                try {
+                    Customers customers = Cashier_03.get(i);
+                    output_file.write(customers.getFirst_Name()+" " +customers.getLast_Name()+ " "+ customers.getBurger_Count());
+                    output_file.write(System.lineSeparator());
+                }catch (Exception error){
+                    output_file.write("Empty Slot");
+                    output_file.write(System.lineSeparator());
+                }
+            }
+            output_file.write(System.lineSeparator());
+            output_file.close();
+            System.out.println("Successfully stored the data into the text file...");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file");
+        }
+    }
 
+
+    private static void load_program_data() {
+        File file = new File("Output.txt");
+        String name = "";
+        String firstName = "";
+        String lastName = "";
+        int burgerCount = 0;
+        int count = 1;
+        int customerCount = 0;
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("Cashier 01 customer name")) {
+                    while (scanner.hasNext()) {
+                        name = scanner.next();
+                        if (!name.equals("Empty")) {
+                            if (count == 1) {
+                                firstName = name;
+                                count++;
+                            } else if (count == 2) {
+                                lastName = name;
+                                count++;
+                            } else if (count == 3) {
+                                burgerCount = Integer.parseInt(name);
+                                Customers customer = new Customers(firstName, lastName, burgerCount);
+                                Cashier_01.addcustomer(customer);
+                                count = 1;
+
+                                if (customerCount < 1) {
+                                    customerCount++;
+                                } else {
+                                    customerCount = 0;
+                                    break;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("Cashier 02 customer name")) {
+                    while (scanner.hasNext()) {
+                        name = scanner.next();
+                        if (!name.equals("Empty")) {
+                            if (count == 1) {
+                                firstName = name;
+                                count++;
+                            } else if (count == 2) {
+                                lastName = name;
+                                count++;
+                            } else if (count == 3) {
+                                burgerCount = Integer.parseInt(name);
+                                Customers customer = new Customers(firstName, lastName, burgerCount);
+                                Cashier_02.addcustomer(customer);
+                                count = 1;
+
+                                if (customerCount < 2) {
+                                    customerCount++;
+                                } else {
+                                    customerCount = 0;
+                                    break;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("Cashier 03 customer name")) {
+                    while (scanner.hasNext()) {
+                        name = scanner.next();
+                        if (!name.equals("Empty")) {
+                            if (count == 1) {
+                                firstName = name;
+                                count++;
+                            } else if (count == 2) {
+                                lastName = name;
+                                count++;
+                            } else if (count == 3) {
+                                burgerCount = Integer.parseInt(name);
+                                Customers customer = new Customers(firstName, lastName, burgerCount);
+                                Cashier_03.addcustomer(customer);
+                                count = 1;
+
+                                if (customerCount < 4) {
+                                    customerCount++;
+                                } else {
+                                    customerCount = 0;
+                                    break;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("Current Burger Stock is")) {
+                    burgerCount = Integer.parseInt(scanner.next());
+                    stock_count = burgerCount;
+                    break;
+                }
+            }
+
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Program data loaded successfully.");
     }
 
 
