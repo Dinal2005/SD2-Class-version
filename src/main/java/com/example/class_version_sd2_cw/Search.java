@@ -1,7 +1,6 @@
 package com.example.class_version_sd2_cw;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +21,7 @@ public class Search implements Initializable {
     @FXML
     private TextField Search_box;
     @FXML
-    private ListView<String> list_output;
+    private ListView list_output;
 
     @FXML
     public void Back_page(ActionEvent event) throws IOException {
@@ -37,8 +35,6 @@ public class Search implements Initializable {
         cashier1 = Main.Cashier_01;
         cashier2 = Main.Cashier_02;
         cashier3 = Main.Cashier_03;
-
-        populateListView();
     }
 
     @FXML
@@ -64,23 +60,5 @@ public class Search implements Initializable {
                 }
             }
         }
-    }
-
-    private void populateListView() {
-        ObservableList<String> customerList = FXCollections.observableArrayList();
-
-        for (Customers customers : cashier1.getQueue()) {
-            customerList.add(customers.getFirst_Name() + " " + customers.getLast_Name() + " " + String.valueOf(customers.getBurger_Count()) + " Burgers" + "    In Cashier01 Row: " + String.valueOf(cashier1.getQueue().indexOf(customers) + 1));
-        }
-
-        for (Customers customers : cashier2.getQueue()) {
-            customerList.add(customers.getFirst_Name() + " " + customers.getLast_Name() + " " + String.valueOf(customers.getBurger_Count()) + " Burgers" + "    In Cashier02 Row: " + String.valueOf(cashier2.getQueue().indexOf(customers) + 1));
-        }
-
-        for (Customers customers : cashier3.getQueue()) {
-            customerList.add(customers.getFirst_Name() + " " + customers.getLast_Name() + " " + String.valueOf(customers.getBurger_Count()) + " Burgers" + "    In Cashier03 Row: " + String.valueOf(cashier3.getQueue().indexOf(customers) + 1));
-        }
-
-        list_output.setItems(customerList);
     }
 }

@@ -94,8 +94,12 @@ public class Main {
                     view_income_of_each_queue();
                     break;
                 case "112", "GUI":
-                    Application.launch(HelloApplication.class, args);
-                    break;
+                    try {
+                        Application.launch(HelloApplication.class, args);
+                        System.out.println("GUI Successfully Loaded");
+                    }catch (IllegalStateException error){
+                        System.out.println("GUI Can be view Once");
+                    }break;
                 case "999", "EXT":
                     System.out.println("Exiting the program.....");
                     System.exit(0);

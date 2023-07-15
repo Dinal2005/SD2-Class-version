@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="807.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.class_version_sd2_cw.Search">
+<AnchorPane prefHeight="807.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.class_version_sd2_cw.Search">
    <children>
       <ImageView fitHeight="147.0" fitWidth="150.0" layoutX="118.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -47,7 +47,7 @@
          </font>
       </Button>
       <ListView fx:id="list_output" layoutX="68.0" layoutY="325.0" prefHeight="410.0" prefWidth="812.0" />
-      <Button defaultButton="true" layoutX="699.0" layoutY="763.0" mnemonicParsing="false" onAction="#Back_page" text="Go back to the Main Page">
+      <Button defaultButton="true" layoutX="699.0" layoutY="763.0" mnemonicParsing="false" onAction="#Back_page" style="-fx-background-radius: 30px;" text="Go back to the Main Page">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
