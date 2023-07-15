@@ -1,5 +1,8 @@
 package com.example.class_version_sd2_cw;
 
+import javafx.application.Application;
+
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,7 +10,7 @@ import java.util.Scanner;
 public class Main {
     public static FoodQueue Cashier_01,Cashier_02,Cashier_03;
 
-    private static  final int max_burger_stock = 5;
+    private static  final int max_burger_stock = 50;
     private static final int low_stock_msg = 10;
     public static int stock_count = max_burger_stock;
     private static final int price_per_burger = 650;
@@ -16,17 +19,14 @@ public class Main {
     private static int Cashier_03_income = 0;
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] ags) {
+    public static void main(String[] args) {
         Cashier_01 = new FoodQueue(2);
         Cashier_02 = new FoodQueue(3);
         Cashier_03 = new FoodQueue(5);
         System.out.println();
         System.out.println("Welcome to \" Foodies Fave Food center \"");
         System.out.println();
-        menu_display();
-    }
-    //making the menu and the switch to represent the inputs for each option
-    private static void menu_display() {
+        //making the menu and the switch to represent the inputs for each option
         String choice;
         do {
             System.out.println("*****************");
@@ -43,6 +43,7 @@ public class Main {
             System.out.println("108 or STK: View Remaining burgers Stock.");
             System.out.println("109 or AFS: Add burgers to Stock.");
             System.out.println("110 or IFQ: View income of the cashiers.");
+            System.out.println("112 or GUI: View GUI program.");
             System.out.println("999 or EXT: Exit the Program.");
             System.out.print("Enter your choice: ");
             choice = scanner.next();
@@ -87,6 +88,9 @@ public class Main {
                 case "110", "IFQ":
                     view_income_of_each_queue();
                     break;
+                case "112", "GUI":
+                    Application.launch(HelloApplication.class, args);
+                    break;
                 case "999", "EXT":
                     System.out.println("Exiting the program.....");
                     System.exit(0);
@@ -97,6 +101,7 @@ public class Main {
             }
         } while (choice != "999" && choice != "EXT");// making a default if the user have havent enter the exit commant then loop the menue
     }
+
     //making the below sub method to display the cashier in vertical
     private static void view_all_queues() {
         System.out.println("*****************");
@@ -282,36 +287,44 @@ public class Main {
     }
 
     //making the option to see the customers in the 3 queues in alphabetical order
-    public static void view_sorted_customer(){
+    public static void view_sorted_customer() {
         List<Customers> sort_customer = new ArrayList<>();
 
         sort_customer.addAll(Cashier_01.bubblesort_customer());
+        sort_customer.addAll(Cashier_02.bubblesort_customer());
+        sort_customer.addAll(Cashier_03.bubblesort_customer());
 
-        sort_customer.addAll(Cashier_02. bubblesort_customer());
+        bubbleSort(sort_customer);
 
-        sort_customer. addAll (Cashier_03. bubblesort_customer());
-
-        sort_customer = new_bubble_sort(sort_customer);
-
-        System.out.println("Sorted list");
-        for (Customers customers: sort_customer){
-            System.out.println(customers.getFirst_Name() + " " + customers.getLast_Name() + " - " + customers.getBurger_Count() + " burgers");
+        System.out.println("Sorted Customer List:");
+        for (Customers customer : sort_customer) {
+            System.out.println(customer.getFirst_Name() + " " + customer.getLast_Name() + " - " + customer.getBurger_Count() + " burgers");
         }
-
     }
 
-    public static List<Customers> new_bubble_sort(List<Customers> sort_customer){
-        for (int i = 0; i < sort_customer.size()-1; i++) {
-            for (int j = 0; j < sort_customer. size()-1; j++){
-                if(sort_customer.get (i). getFirst_Name().charAt(0)> sort_customer.get (i+1). getFirst_Name(). charAt (0)) {
-                    Customers temp = sort_customer. get(i);
-                    sort_customer. set(i, sort_customer. get(i + 1));
-                    sort_customer. set(i + 1, temp);
+    public static void bubbleSort(List<Customers> customers) {
+        int n = customers.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (customers.get(j).getFirst_Name().charAt(0) > customers.get(j + 1).getFirst_Name().charAt(0)) {
+                    Customers temp = customers.get(j);
+                    customers.set(j, customers.get(j + 1));
+                    customers.set(j + 1, temp);
+                    swapped = true;
                 }
             }
+            if (!swapped) {
+                break;
+            }
         }
-        return sort_customer;
     }
+
+    private static void store_program_data(){
+
+    }
+
 
 
     //making the option to view the remaining burger stock
