@@ -1,21 +1,21 @@
 Current Burger Stock is:
-22
+41
 
 Cashier 01 customer name:
-pakaya pakaya 3
-pakaya pakaya 3
+dinal fernando 4
+pakaya pakaya 4
 
 Cashier 02 customer name:
-piyumika dannena 10
-pakaya pakaya 3
-pakaya pakaya 3
+dinal fernando 9
+lisitha madurapperuma 4
+pakaya pakaya 5
 
 Cashier 03 customer name:
-namal rajapakshe 1
-shiranthi rajapakshe 2
-nigel jacob 5
-test test 2
-pakaya pakaya 3
+iresh fernando 2
+kavindu ashein 2
+tithira desilva 3
+eshan withanage 2
+vihaga fernando 6
 
 Waiting List:
 Empty Slot

@@ -155,18 +155,8 @@ public class Main {
     }
 
     private static void add_customer_queue(){
-        FoodQueue queue_size_min = null;
-        if (Cashier_01.getQueue().size() < Cashier_02.getQueue_size() && Cashier_01.getQueue().size() < Cashier_03.getQueue().size() && Cashier_01.getQueue().size() < 2){
-            queue_size_min = Cashier_01;
-        }if(Cashier_02.getQueue().size() < Cashier_01.getQueue_size() && Cashier_02.getQueue().size() < Cashier_03.getQueue().size() && Cashier_02.getQueue().size() < 3 ){
-            queue_size_min = Cashier_02;
-        }if(Cashier_03.getQueue().size() < Cashier_01.getQueue_size() && Cashier_03.getQueue().size() < Cashier_02.getQueue().size() && Cashier_03.getQueue().size() < 5){
-            queue_size_min = Cashier_03;
-        }if (Cashier_02.getQueue().size() == Cashier_03.getQueue().size()) {
-            queue_size_min = Cashier_03;
-        }else if(Cashier_01.getQueue().size() == 2 && Cashier_02.getQueue_size() == 3 && Cashier_03.getQueue().size() < 5){
-            queue_size_min = Cashier_03;
-        }
+        FoodQueue queue_size_min = find_minimum_queue();
+
         System.out.print("Enter the Customer First Name: ");
         String customer_first_name = scanner.nextLine();
 
@@ -186,6 +176,24 @@ public class Main {
             }else {
                 System.out.println("Waiting list exceeded..Cannot add the Customer... ");
             }
+        }
+    }
+
+    private static FoodQueue find_minimum_queue() {
+        if (Cashier_01.getQueue().size() <= Cashier_02.getQueue().size() && Cashier_01.getQueue().size() < 2) {
+            if (Cashier_01.getQueue().size() <= Cashier_03.getQueue().size()) {
+                return Cashier_01;
+            } else {
+                return Cashier_03;
+            }
+        } else if (Cashier_02.getQueue().size() <= Cashier_03.getQueue().size() && Cashier_02.getQueue().size() < 3) {
+            return Cashier_02;
+
+        } else if (Cashier_03.getQueue().size() < 5){
+            return Cashier_03;
+
+        } else {
+            return null;
         }
     }
 
@@ -619,5 +627,8 @@ public class Main {
         System.out.println("Cashier 01 Income is: " +"Rs. " + Cashier_01_income);
         System.out.println("Cashier 02 Income is: " +"Rs. " + Cashier_02_income);
         System.out.println("Cashier 03 Income is: " +"Rs. " + Cashier_03_income);
+        System.out.println();
+        System.out.println("Total Income is: " + "Rs. " +(Cashier_01_income+Cashier_02_income+Cashier_03_income));
+        System.out.println();
     }
 }
