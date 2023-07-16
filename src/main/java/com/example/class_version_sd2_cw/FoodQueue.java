@@ -18,12 +18,7 @@ public class FoodQueue {
     }
 
     public void addcustomer(Customers customers){
-        if (Queue.size() < queue_size) {
             Queue.add(customers);
-            System.out.println("Customer added successfully.\n");
-        } else {
-            System.out.println("Queue is full. Customer cannot be added.");
-        }
     }
     public void remove(int remove_index){
         Queue.remove(remove_index);

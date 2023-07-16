@@ -22,12 +22,14 @@ public class Main {
     private static int Cashier_01_income = 0;
     private static int Cashier_02_income = 0;
     private static int Cashier_03_income = 0;
+    private static Circular_Queue waiting_list;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Cashier_01 = new FoodQueue(2);
         Cashier_02 = new FoodQueue(3);
         Cashier_03 = new FoodQueue(5);
+        waiting_list = new Circular_Queue(15);
         System.out.println();
         System.out.println("Welcome to \" Foodies Fave Food center \"");
         System.out.println();
@@ -154,16 +156,15 @@ public class Main {
 
     private static void add_customer_queue(){
         FoodQueue queue_size_min = null;
-        if (Cashier_01.getQueue().size() < Cashier_01.getQueue_size()){
+        if (Cashier_01.getQueue().size() < Cashier_02.getQueue_size() && Cashier_01.getQueue().size() < Cashier_03.getQueue().size() && Cashier_01.getQueue().size() < 2){
             queue_size_min = Cashier_01;
-        }
-        if(Cashier_02.getQueue().size() < Cashier_02.getQueue_size() && Cashier_02.getQueue().size() < Cashier_03.getQueue().size() ){
+        }if(Cashier_02.getQueue().size() < Cashier_01.getQueue_size() && Cashier_02.getQueue().size() < Cashier_03.getQueue().size() && Cashier_02.getQueue().size() < 3 ){
             queue_size_min = Cashier_02;
-        }else if(Cashier_03.getQueue().size() < Cashier_03.getQueue_size() && Cashier_03.getQueue().size() < Cashier_01.getQueue().size()){
+        }if(Cashier_03.getQueue().size() < Cashier_01.getQueue_size() && Cashier_03.getQueue().size() < Cashier_02.getQueue().size() && Cashier_03.getQueue().size() < 5){
             queue_size_min = Cashier_03;
-        } else if (Cashier_02.getQueue().size() == Cashier_03.getQueue().size() && Cashier_02.getQueue().size() < Cashier_02.getQueue_size()) {
-            queue_size_min = Cashier_02;
-        }else if(Cashier_02.getQueue().size() == Cashier_02.getQueue_size()){
+        }if (Cashier_02.getQueue().size() == Cashier_03.getQueue().size()) {
+            queue_size_min = Cashier_03;
+        }else if(Cashier_01.getQueue().size() == 2 && Cashier_02.getQueue_size() == 3 && Cashier_03.getQueue().size() < 5){
             queue_size_min = Cashier_03;
         }
         System.out.print("Enter the Customer First Name: ");
@@ -174,25 +175,34 @@ public class Main {
 
         System.out.print("Enter the Burger count: ");
         int burger_count = scanner.nextInt();
-        try{
-            Customers newcustomer = new Customers(customer_first_name.substring(0,1).toLowerCase()+customer_first_name.substring(1),customer_last_name.substring(0,1).toLowerCase()+customer_last_name.substring(1),burger_count);
+        Customers newcustomer = new Customers(customer_first_name.substring(0,1).toLowerCase()+customer_first_name.substring(1),customer_last_name.substring(0,1).toLowerCase()+customer_last_name.substring(1),burger_count);
+        if (queue_size_min != null){
             queue_size_min.addcustomer(newcustomer);
-        }catch (NullPointerException error){
-            System.out.println("Cashiers are full");
+            System.out.println("Customer added successfully.\n");
+        }else {
+            if (!waiting_list.isFull()){
+                waiting_list.enQueue(newcustomer);
+                System.out.println("Cashiers are Full.... Customer added to the waiting list..");
+            }else {
+                System.out.println("Waiting list exceeded..Cannot add the Customer... ");
+            }
         }
     }
+
     private static void remove_customers_queue(){
         System.out.print("Enter the Cashier (1-3): ");
         int cashier = scanner.nextInt();
 
         System.out.print("Enter the Cashier Position: ");
         int position = scanner.nextInt();
+        FoodQueue rem_cash = null;
 
         switch (cashier){
             case 1:
                 if(!Cashier_01.getQueue().isEmpty()){
                     if (Cashier_01.get(position -1)!= null){
                         Cashier_01.remove(position -1);
+                        rem_cash = Cashier_01;
                     }else{
                         System.out.println("There is no Customer in the position you entered..");
                     }
@@ -204,6 +214,7 @@ public class Main {
                 if(!Cashier_02.getQueue().isEmpty()){
                     if (Cashier_02.get(position -1)!= null){
                         Cashier_02.remove(position -1);
+                        rem_cash = Cashier_02;
                     }else{
                         System.out.println("There is no Customer in the position you entered..");
                     }
@@ -215,6 +226,7 @@ public class Main {
                 if(!Cashier_03.getQueue().isEmpty()){
                     if (Cashier_03.get(position -1)!= null){
                         Cashier_03.remove(position -1);
+                        rem_cash = Cashier_03;
                     }else{
                         System.out.println("There is no Customer in the position you entered..");
                     }
@@ -223,11 +235,20 @@ public class Main {
                 }
                 break;
         }
+        if (!waiting_list.isEmpty()){
+            if (rem_cash != null){
+                Customers customers = waiting_list.deQueue();
+                rem_cash.addcustomer(customers);
+                System.out.println(customers.getFirst_Name()+" "+customers.getLast_Name()+" "+" Successfully Added to the Cashier from waiting list..");
+                waiting_list.removeCustomer(customers);
+            }
+        }
     }
     private static void remove_served_customer() {
         if (stock_count > 0) {
             System.out.print("Enter the Cashier (1-3): ");
             int cashier = scanner.nextInt();
+            FoodQueue rem_cash = null;
 
             if (stock_count > 0) {
                 System.out.println();
@@ -236,10 +257,12 @@ public class Main {
                         Customers customer_name = Cashier_01.get(0);
                         int requestedBurgerCount = customer_name.getBurger_Count();
 
+
                         if (requestedBurgerCount <= stock_count) {
                             Cashier_01.remove(0);
                             stock_count -= requestedBurgerCount;
                             Cashier_01_income = requestedBurgerCount * price_per_burger;
+                            rem_cash = Cashier_01;
                             System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
                             System.out.println("Please Come Again!!!!");
                         } else {
@@ -257,6 +280,7 @@ public class Main {
                             Cashier_02.remove(0);
                             stock_count -= requestedBurgerCount;
                             Cashier_02_income = requestedBurgerCount * price_per_burger;
+                            rem_cash = Cashier_02;
                             System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
                             System.out.println("Please Come Again!!!!");
                         } else {
@@ -274,6 +298,7 @@ public class Main {
                             Cashier_03.remove(0);
                             stock_count -= requestedBurgerCount;
                             Cashier_03_income = requestedBurgerCount * price_per_burger;
+                            rem_cash = Cashier_03;
                             System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
                             System.out.println("Please Come Again!!!!");
                         } else {
@@ -282,6 +307,14 @@ public class Main {
                     } else {
                         System.out.println("Cashier 03 is Empty...");
                     }
+                }
+            }
+            if (!waiting_list.isEmpty()){
+                if (rem_cash != null){
+                    Customers customers = waiting_list.deQueue();
+                    rem_cash.addcustomer(customers);
+                    System.out.println(customers.getFirst_Name()+" "+customers.getLast_Name()+" "+" Successfully Added to the Cashier from waiting list..");
+                    waiting_list.removeCustomer(customers);
                 }
             }
             if (stock_count < low_stock_msg) {
@@ -363,6 +396,18 @@ public class Main {
             for (int i = 0; i < Cashier_03.getQueue_size();i++){
                 try {
                     Customers customers = Cashier_03.get(i);
+                    output_file.write(customers.getFirst_Name()+" " +customers.getLast_Name()+ " "+ customers.getBurger_Count());
+                    output_file.write(System.lineSeparator());
+                }catch (Exception error){
+                    output_file.write("Empty Slot");
+                    output_file.write(System.lineSeparator());
+                }
+            }
+            output_file.write(System.lineSeparator());
+            output_file.write("Waiting List:\n");
+            for (int i = 0; i < 15;i++){
+                try {
+                    Customers customers = waiting_list.getQueue().get(i);
                     output_file.write(customers.getFirst_Name()+" " +customers.getLast_Name()+ " "+ customers.getBurger_Count());
                     output_file.write(System.lineSeparator());
                 }catch (Exception error){
@@ -475,6 +520,38 @@ public class Main {
                                 count = 1;
 
                                 if (customerCount < 4) {
+                                    customerCount++;
+                                } else {
+                                    customerCount = 0;
+                                    break;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+            scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains("Waiting List")) {
+                    while (scanner.hasNext()) {
+                        name = scanner.next();
+                        if (!name.equals("Empty")) {
+                            if (count == 1) {
+                                firstName = name;
+                                count++;
+                            } else if (count == 2) {
+                                lastName = name;
+                                count++;
+                            } else if (count == 3) {
+                                burgerCount = Integer.parseInt(name);
+                                Customers customer = new Customers(firstName, lastName, burgerCount);
+                                waiting_list.enQueue(customer);
+                                count = 1;
+
+                                if (customerCount < 14) {
                                     customerCount++;
                                 } else {
                                     customerCount = 0;

@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 public class Homepage implements Initializable{
     @FXML
     public void MainPage(ActionEvent event) throws IOException {
-        System.out.println("Hello world");
         Parent nextPage = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Scene currentScene = ((Button) event.getSource()).getScene();
         currentScene.setRoot(nextPage);
