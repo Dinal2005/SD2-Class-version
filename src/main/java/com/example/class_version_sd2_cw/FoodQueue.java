@@ -1,3 +1,6 @@
+// T.J.D.I.FERNANDO
+//20220536(IIT_ID)
+//w2000072(UOW_ID)
 package com.example.class_version_sd2_cw;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ public class FoodQueue {
         return Queue;
     }
 
+    //assigning the queue size to the arraylist
     public FoodQueue(int queue_size) {
         this.queue_size = queue_size;
         this.Queue = new ArrayList<>();
@@ -26,6 +30,7 @@ public class FoodQueue {
         System.out.println();
     }
 
+    //sort main function
     public List<Customers> bubblesort_customer() {
         List<Customers> sortedCustomers = new ArrayList<>(Queue);
 

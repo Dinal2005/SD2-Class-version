@@ -1,7 +1,9 @@
+// T.J.D.I.FERNANDO
+//20220536(IIT_ID)
+//w2000072(UOW_ID)
 package com.example.class_version_sd2_cw;
 
 import javafx.application.Application;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,7 +15,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class Main {
-    public static FoodQueue Cashier_01,Cashier_02,Cashier_03;
+    public static FoodQueue Cashier_01,Cashier_02,Cashier_03;//making cashiers from FoodQueue class
 
     private static  final int max_burger_stock = 50;
     private static final int low_stock_msg = 10;
@@ -22,7 +24,7 @@ public class Main {
     private static int Cashier_01_income = 0;
     private static int Cashier_02_income = 0;
     private static int Cashier_03_income = 0;
-    private static Circular_Queue waiting_list;
+    private static Circular_Queue waiting_list; // Assigning the waiting queue
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -100,7 +102,7 @@ public class Main {
                         Application.launch(HelloApplication.class, args);
                         System.out.println("GUI Successfully Loaded");
                     }catch (IllegalStateException error){
-                        System.out.println("GUI Can be view Once");
+                        System.out.println("GUI Can be view Once");//added a exception error because gui can be open one time.
                     }break;
                 case "999", "EXT":
                     System.out.println("Exiting the program.....");
@@ -114,6 +116,7 @@ public class Main {
     }
 
     //making the below sub method to display the cashier in vertical
+    //view all queue using array list
     private static void view_all_queues() {
         System.out.println("*****************");
         System.out.println("*   Cashiers    *");
@@ -155,7 +158,7 @@ public class Main {
     }
 
     private static void add_customer_queue(){
-        FoodQueue queue_size_min = find_minimum_queue();
+        FoodQueue queue_size_min = find_minimum_queue(); // minimum queue method is below.
 
         System.out.print("Enter the Customer First Name: ");
         String customer_first_name = scanner.nextLine();
@@ -170,7 +173,7 @@ public class Main {
             queue_size_min.addcustomer(newcustomer);
             System.out.println("Customer added successfully.\n");
         }else {
-            if (!waiting_list.isFull()){
+            if (!waiting_list.isFull()){//adding customers to the waiting list if the main cashier slots are exeeded.
                 waiting_list.enQueue(newcustomer);
                 System.out.println("Cashiers are Full.... Customer added to the waiting list..");
             }else {
@@ -179,6 +182,7 @@ public class Main {
         }
     }
 
+    // made this to find the shortest lenght cashier
     private static FoodQueue find_minimum_queue() {
         if (Cashier_01.getQueue().size() <= Cashier_02.getQueue().size() && Cashier_01.getQueue().size() < 2) {
             if (Cashier_01.getQueue().size() <= Cashier_03.getQueue().size()) {
@@ -197,6 +201,7 @@ public class Main {
         }
     }
 
+    //method to remove a customer from the queue
     private static void remove_customers_queue(){
         System.out.print("Enter the Cashier (1-3): ");
         int cashier = scanner.nextInt();
@@ -243,7 +248,7 @@ public class Main {
                 }
                 break;
         }
-        if (!waiting_list.isEmpty()){
+        if (!waiting_list.isEmpty()){ // adding the waiting queue when the customer is moving from th waiting list to the main cashier
             if (rem_cash != null){
                 Customers customers = waiting_list.deQueue();
                 rem_cash.addcustomer(customers);
@@ -252,6 +257,8 @@ public class Main {
             }
         }
     }
+
+    // method to remove a served customer
     private static void remove_served_customer() {
         if (stock_count > 0) {
             System.out.print("Enter the Cashier (1-3): ");
@@ -269,7 +276,7 @@ public class Main {
                         if (requestedBurgerCount <= stock_count) {
                             Cashier_01.remove(0);
                             stock_count -= requestedBurgerCount;
-                            Cashier_01_income = requestedBurgerCount * price_per_burger;
+                            Cashier_01_income = requestedBurgerCount * price_per_burger; // did this to get the burger income
                             rem_cash = Cashier_01;
                             System.out.println("Thank you for ordering From \"Foodies Fave Food center\"");
                             System.out.println("Please Come Again!!!!");
@@ -352,6 +359,7 @@ public class Main {
         }
     }
 
+    //make the bubblesort function with arraylist
     public static void bubbleSort(List<Customers> customers) {
         int n = customers.size();
         boolean swapped;
@@ -371,6 +379,7 @@ public class Main {
         }
     }
 
+    // method to store data to the text file
     private static void store_program_data(){
         try {
             FileWriter output_file = new FileWriter("Output.txt");//textfile name and filewritter assigning
@@ -432,6 +441,7 @@ public class Main {
     }
 
 
+    //method to load the stored text file
     private static void load_program_data() {
         File file = new File("Output.txt");
         String name = "";
@@ -540,6 +550,7 @@ public class Main {
                     }
                 }
             }
+            //waiting list assigning
             scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -623,6 +634,7 @@ public class Main {
         System.out.println();
     }
 
+    //make this method to print the income of each cashier
     private static void view_income_of_each_queue(){
         System.out.println("Cashier 01 Income is: " +"Rs. " + Cashier_01_income);
         System.out.println("Cashier 02 Income is: " +"Rs. " + Cashier_02_income);

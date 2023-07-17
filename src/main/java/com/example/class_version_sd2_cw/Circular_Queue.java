@@ -1,7 +1,13 @@
+// T.J.D.I.FERNANDO
+//20220536(IIT_ID)
+//w2000072(UOW_ID)
 package com.example.class_version_sd2_cw;
 
 import java.util.ArrayList;
 
+//referenced https://www.geeksforgeeks.org/queue-interface-java/
+//referenced https://www.youtube.com/watch?v=PvDoT79oHTs
+//referenced https://www.javainuse.com/java/circular_java
 public class Circular_Queue {
     private int size;
     private int front;
@@ -59,6 +65,7 @@ public class Circular_Queue {
         return temp;
     }
 
+    //method to remove the customer from the waiting list
     public void removeCustomer(Customers customer) {
         if (queue.isEmpty()) {
             System.out.println("Queue Empty!");
