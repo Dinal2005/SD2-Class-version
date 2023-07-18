@@ -73,7 +73,6 @@ public class HelloController implements Initializable {
                 });
             }
         }
-
         if (cashier_03 != null && cashier_03.getQueue() != null) {
             for (int i = 0; i < cashier_03.getQueue().size(); i++){
                 cashier3.getChildren().get(i).setVisible(true);
